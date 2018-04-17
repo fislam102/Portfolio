@@ -10,9 +10,9 @@
 
 (function( $ ){
 
-	var createdElements = [];
+	let createdElements = [];
 
-	var defaults = {
+	let defaults = {
 		options: {
 			prependExistingHelpBlock: false,
 			sniffHtml: true, // sniff for 'required', 'maxlength', etc
@@ -31,26 +31,26 @@
     methods: {
       init : function( options ) {
 
-        var settings = $.extend(true, {}, defaults);
+        const settings = $.extend(true, {}, defaults);
 
         settings.options = $.extend(true, settings.options, options);
 
-        var $siblingElements = this;
+        const $siblingElements = this;
 
-        var uniqueForms = $.unique(
+        const uniqueForms = $.unique(
           $siblingElements.map( function () {
             return $(this).parents("form")[0];
           }).toArray()
         );
 
         $(uniqueForms).bind("submit", function (e) {
-          var $form = $(this);
-          var warningsFound = 0;
-          var $inputs = $form.find("input,textarea,select").not("[type=submit],[type=image]").filter(settings.options.filter);
+          let $form = $(this);
+          let warningsFound = 0;
+          const $inputs = $form.find("input,textarea,select").not("[type=submit],[type=image]").filter(settings.options.filter);
           $inputs.trigger("submit.validation").trigger("validationLostFocus.validation");
 
           $inputs.each(function (i, el) {
-            var $this = $(el),
+            const $this = $(el),
               $controlGroup = $this.parents(".control-group").first();
             if (
               $controlGroup.hasClass("warning")
@@ -81,7 +81,7 @@
         return this.each(function(){
 
           // Get references to everything we're interested in
-          var $this = $(this),
+          const $this = $(this),
             $controlGroup = $this.parents(".control-group").first(),
             $helpBlock = $controlGroup.find(".help-block").first(),
             $form = $this.parents("form").first(),
@@ -117,7 +117,7 @@
             //                                                       MAX
             // ---------------------------------------------------------
             if ($this.attr("max") !== undefined || $this.attr("aria-valuemax") !== undefined) {
-              var max = ($this.attr("max") !== undefined ? $this.attr("max") : $this.attr("aria-valuemax"));
+              const max = ($this.attr("max") !== undefined ? $this.attr("max") : $this.attr("aria-valuemax"));
               message = "Too high: Maximum of '" + max + "'<!-- data-validation-max-message to override -->";
               if ($this.data("validationMaxMessage")) {
                 message = $this.data("validationMaxMessage");
@@ -129,7 +129,7 @@
             //                                                       MIN
             // ---------------------------------------------------------
             if ($this.attr("min") !== undefined || $this.attr("aria-valuemin") !== undefined) {
-              var min = ($this.attr("min") !== undefined ? $this.attr("min") : $this.attr("aria-valuemin"));
+              const min = ($this.attr("min") !== undefined ? $this.attr("min") : $this.attr("aria-valuemin"));
               message = "Too low: Minimum of '" + min + "'<!-- data-validation-min-message to override -->";
               if ($this.data("validationMinMessage")) {
                 message = $this.data("validationMinMessage");
